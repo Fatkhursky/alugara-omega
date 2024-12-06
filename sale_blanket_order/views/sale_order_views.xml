@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_sale_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                <attribute name="context">{'default_dp_blanket': dp_blanket, 'default_dp_order': dp_order, 'default_dp_sisa': dp_sisa}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.from.blanket.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="blanket_order_id" invisible="1" />
+                <field name="dp_blanket"/>
+                <field name="dp_order"/>
+                <field name="dp_sisa"/>
+                <field name="amount_total" invisible="1"/>
+            </field>
+            <xpath
+                expr="//field[@name='order_line']//tree/field[@name='product_id']"
+                position="after"
+            >
+                <field
+                    name="blanket_order_line"
+                    context="{'from_sale_order': True}"
+                    column_invisible="not parent.blanket_order_id"
+                />
+                <field name="dp_blanket_line" column_invisible="1" optional_hide="1"/>
+                <field name="dp_order_line" column_invisible="1" optional_hide="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context">{'from_sale_order': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_order_form_disable_adding_lines" model="ir.ui.view">
+        <field name="name">sale.order.from.blanket.form - disable adding lines</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']//tree" position="attributes">
+                <t groups="sale_blanket_order.blanket_orders_disable_adding_lines">
+                    <attribute name="create">blanket_order_id==False</attribute>
+                </t>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_sale_order_dp_tree" model="ir.ui.view">
+        <field name="name">sale.order.dp.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="blanket_order_id"/>
+                <field name="dp_blanket"/>
+                <field name="dp_order"/>
+                <field name="dp_sisa"/>
+            </xpath>
+        </field>
+    </record>
+
+<!--    <record id="st_view_order_form" model="ir.ui.view">-->
+<!--        <field name="model">sale.order</field>-->
+<!--        <field name="inherit_id" ref="sale.view_order_form" />-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">-->
+<!--                <attribute name="context">{'default_dp_blanket': dp_blanket, 'default_dp_order': dp_order, 'default_dp_sisa': dp_sisa}</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

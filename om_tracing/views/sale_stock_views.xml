@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sales Tracking -->
+        <record id="sale_report_view_tree" model="ir.ui.view">
+            <field name="name">sale.report.view.tree.inherit.website.sale</field>
+            <field name="model">sale.report</field>
+            <field name="inherit_id" ref="sale.sale_report_view_tree"/>
+            <field name="arch" type="xml">
+                 <field name="team_id" position="after">
+                    <field name="qty_to_deliver" optional="show"/>
+                    <field name="qty_delivered" optional="show"/>
+                    <field name="qty_to_invoice" optional="show"/>
+                    <field name="qty_invoiced" optional="show"/>
+                </field>
+                <field name="price_subtotal" position="after">
+                    <field name="pricelist_id" optional="hide"/>
+                </field>
+                <field name="price_total" position="after">
+                    <field name="discount" optional="hide"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- Purchase Tracking -->
+        <record id="action_purchase_history" model="ir.ui.view">
+            <field name="name">purchase.history.tree</field>
+            <field name="model">purchase.order.line</field>
+            <field name="inherit_id" ref="purchase.purchase_history_tree"/>
+            <field name="arch" type="xml">
+                <field name="order_id" position="after">
+                    <field name="product_id" optional="show"/>
+                </field>
+                <field name="product_uom_qty" position="after">
+                    <field name="product_uom" optional="hide"/>
+                    <field name="qty_received" optional="show"/>
+                    <field name="qty_to_invoice" optional="show"/>
+                    <field name="qty_invoiced" optional="show"/>
+                    <field name="discount" optional="hide"/>
+                </field>
+                <field name="price_unit" position="after">
+                    <field name="currency_id" optional="hide"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

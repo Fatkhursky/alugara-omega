@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_account_config_settings" model="ir.ui.view">
+        <field name="name">account settings currency revaluation</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="40"/>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form//app[@name='account']" position="inside">
+                <block title="Multicurrency revaluation" id="multicurrency_revaluation_settings">
+                    <setting id="enable_auto_post" company_dependent="1"
+                             help="If marked, the entries created in the process will be posted automatically."
+                             title="Values set here are company-specific.">
+                            <field name="auto_post_entries"/>
+                    </setting>
+                    <setting id="default_currency_reval_journal_id" company_dependent="1" title="Values set here are company-specific.">
+                            <b>Default revaluation journal</b>
+                            <div class="text-muted">
+                                <p style="margin-bottom: 0"/>
+                            </div>
+                            <label for="default_currency_reval_journal_id"/>
+                            <field name="default_currency_reval_journal_id" options="{'no_create_edit': True, 'no_open': True}"/>
+                    </setting>
+                </block>
+                <div class="col-xs-24 col-md-12 o_setting_box">
+                    <div class="content-group">
+                        <table>
+                            <th class="col-xs-1 col-md-1"/>
+                            <tr class="row">
+                                <th class="col-xs-6 col-md-3" />
+                                <th class="col-xs-6 col-md-3">
+                                    <b>Loss</b>
+                                </th>
+                                <th class="col-xs-6 col-md-3">
+                                    <b>Gain</b>
+                                </th>
+                                <th class="col-xs-6 col-md-3">
+                                    <b>Analytic account</b>
+                                </th>
+                            </tr>
+                            <tr class="row">
+                                <th class="col-xs-6 col-md-3">
+                                    <p>Revaluation accounts</p>
+                                    <span
+                                        class="fa fa-lg fa-building-o"
+                                        title="Values set here are company-specific."
+                                        groups="base.group_multi_company"
+                                    />
+                                </th>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="revaluation_loss_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="revaluation_gain_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="revaluation_analytic_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                            </tr>
+                            <tr class="row">
+                                <th class="col-xs-6 col-md-3">
+                                    <p>Provision B.S accounts</p>
+                                    <span
+                                        class="fa fa-lg fa-building-o"
+                                        title="Values set here are company-specific."
+                                        groups="base.group_multi_company"
+                                    />
+                                </th>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="provision_bs_loss_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="provision_bs_gain_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3" />
+                            </tr>
+                            <tr class="row">
+                                <th class="col-xs-6 col-md-3">
+                                    <p>Provision P&amp;L accounts</p>
+                                    <span
+                                        class="fa fa-lg fa-building-o"
+                                        title="Values set here are company-specific."
+                                        groups="base.group_multi_company"
+                                    />
+                                </th>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="provision_pl_loss_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="provision_pl_gain_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                                <td class="col-xs-6 col-md-3">
+                                    <field
+                                        name="provision_pl_analytic_account_id"
+                                        nolabel="1"
+                                    />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

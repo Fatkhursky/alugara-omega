@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inquiry History Product -->
+        <record id="view_history_product_tree" model="ir.ui.view">
+            <field name="name">history.product.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="arch" type="xml">
+                 <tree string="History Product" create="0" edit="0" delete="0">
+                     <field name="date" />
+                     <field name="date_done" optional="hide"/>
+                     <field name="sale_id" optional="hide"/>
+                     <field name="purchase_id" optional="hide"/>
+                     <field name="picking_partner_id" optional="hide"/>
+                     <field name="sale_user_id" optional="hide"/>
+                     <field name="purchase_user_id" optional="hide"/>
+                     <field name="transaction" />
+                     <field name="ref" optional="hide"/>
+                     <field name="analytic_distribution" widget="analytic_distribution"/>
+                     <field name="product_id" string="Product"/>
+                     <field name="product_from"/>
+                     <field name="product_to"/>
+                     <field name="product_uom_id" string="UoM" optional="hide"/>
+                     <field name="quantity" string="Qty"/>
+                     <field name="sale_price_tax" optional="hide"/>
+                     <field name="purchase_price_unit" optional="hide"/>
+                     <field name="sale_discount" optional="hide"/>
+                     <field name="purchase_discount" optional="hide"/>
+                     <field name="product_subtotal" string="Price" sum="SUM"/>
+                     <field name="state" optional="hide"/>
+		     <field name="create_date" optional="hide"/>
+		     <field name="create_uid" optional="hide"/>
+		     <field name="write_date" optional="hide"/>
+		     <field name="write_uid" optional="hide"/>
+                 </tree>
+            </field>
+        </record>
+        <record id="view_history_product_form" model="ir.ui.view">
+            <field name="name">history.product.form</field>
+            <field name="model">stock.move.line</field>
+            <field name="arch" type="xml">
+                 <form string="History Product" create="0" edit="0" delete="0">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                     <group>
+                         <group>
+                             <field name="picking_id"/>
+                             <field name="sale_id" />
+                             <field name="purchase_id" />
+                             <field name="picking_partner_id" />
+                             <field name="transaction" />
+                             <field name="ref" />
+                             <field name="company_id" invisible="1"/>
+                             <field name="analytic_distribution" widget="analytic_distribution"/>
+                         </group>
+                         <group>
+                             <field name="product_id" string="Product"/>
+                             <field name="product_from"/>
+                             <field name="product_to"/>
+                             <field name="product_uom_category_id" invisible="1"/>
+                             <field name="product_uom_id" string="UoM" optional="hide"/>
+                             <field name="quantity" string="Qty"/>
+                             <field name="product_subtotal" string="Price"/>
+                         </group>
+                         <group>
+                             <field name="date" />
+                             <field name="date_done" />
+                         </group>
+                     </group>
+                 </form>
+            </field>
+        </record>
+
+        <record id="stock_history_product_action" model="ir.actions.act_window">
+            <field name="name">History Product</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.move.line</field>
+            <field name="view_mode">tree,pivot</field>
+            <field name="domain">['|', '|', ('sale_id', '!=', False), ('purchase_id', '!=', False), ('picking_code', '!=', 'incoming')]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_history_product_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_history_product_form')})]"/>
+        </record>
+
+        <menuitem action="stock_history_product_action" id="account_history_product_menu"
+                  parent="stock.menu_warehouse_report"
+                  sequence="90"/>
+    </data>
+</odoo>

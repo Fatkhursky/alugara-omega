@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.purchase.order.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <field name="any_received" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_create_invoice']" position="replace">
+                <button name="action_create_invoice" string="Create Bill" type="object" class="oe_highlight" context="{'create_bill':True}" invisible="not any_received or (state not in ('purchase', 'done') or invoice_status in ('no', 'invoiced'))" data-hotkey="w"/>
+                
+            </xpath>
+
+            <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_cancel']" position="before">
+                <button
+                    name="%(om_purchase_down_payment.action_view_purchase_advance_payment_inv)d"
+                    invisible="state != 'purchase' or invoice_status != 'no' and any_received"
+                    type="action"
+                    string="Create Bill"
+                />
+            </xpath>
+            <field name="currency_id" position="after">
+                <field name="dp_blanket"/>
+                <field name="dp_order"/>
+                <field name="dp_order_latest" invisible="dp_order == 0"/>
+                <field name="dp_sisa"/>
+                <field name="amount_total" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- <record id="purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            
+            
+        </field>
+    </record> -->
+</odoo>

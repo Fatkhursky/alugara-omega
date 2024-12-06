@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_account_search_inherit_custom" model="ir.ui.view">
+        <field name="name">account.account.search.inherit.custom</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search/filter[@name='activeacc']" position="after">
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
